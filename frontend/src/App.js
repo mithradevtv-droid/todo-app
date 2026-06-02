@@ -74,15 +74,28 @@ export default function App() {
   try {
     const res = await fetch(API, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text: input,
-        priority,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text: input, priority }),
     });
 
+    console.log("Status:", res.status);
+
+    const text = await res.text();
+    console.log("Raw response:", text);
+
+    if (!text) {
+      console.error("Server returned empty response");
+      return;
+    }
+
+    const todo = JSON.parse(text);
+
+    setTodos((prev) => [todo, ...prev]);
+    setInput("");
+  } catch (err) {
+    console.error("ADD ERROR:", err);
+  }
+};
     console.log("STATUS:", res.status);
     console.log("OK:", res.ok);
 
