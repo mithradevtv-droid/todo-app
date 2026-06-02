@@ -69,16 +69,29 @@ export default function App() {
   useEffect(() => { fetchTodos(); }, [fetchTodos]);
 
   const addTodo = async () => {
-    if (!input.trim()) return;
+  if (!input.trim()) return;
+
+  try {
     const res = await fetch(API, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: input, priority }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: input,
+        priority
+      })
     });
-    const todo = await res.json();
-    setTodos((prev) => [todo, ...prev]);
-    setInput("");
-  };
+
+    console.log("Status:", res.status);
+
+    const text = await res.text();
+    console.log("Response:", text);
+
+  } catch (err) {
+    console.error(err);
+  }
+};
 
   const toggleTodo = async (id, completed) => {
     const res = await fetch(`${API}/${id}`, {
