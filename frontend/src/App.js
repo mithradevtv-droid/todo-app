@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 
+console.log("CURRENT API:", API);
+
 const API = "https://todo-app-be23.onrender.com/api/todos";
 
 const PRIORITY_CONFIG = {
