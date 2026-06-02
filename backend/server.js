@@ -4,10 +4,11 @@ const Database = require("better-sqlite3");
 const path = require("path");
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+
 
 // Init SQLite DB
 const db = new Database(path.join(__dirname, "todos.db"));
@@ -70,4 +71,4 @@ app.delete("/api/todos/completed/all", (req, res) => {
   res.json({ success: true });
 });
 
-app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
