@@ -68,50 +68,28 @@ export default function App() {
 
   useEffect(() => { fetchTodos(); }, [fetchTodos]);
 
- const addTodo = async () => {
-  if (!input.trim()) return;
+  const addTodo = async () => {
+    if (!input.trim()) return;
 
-  try {
-    const res = await fetch(API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: input, priority }),
-    });
+    try {
+      const res = await fetch(API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: input, priority }),
+      });
 
-    console.log("Status:", res.status);
+      if (!res.ok) {
+        console.error("Failed to add todo:", res.status);
+        return;
+      }
 
-    const text = await res.text();
-    console.log("Raw response:", text);
-
-    if (!text) {
-      console.error("Server returned empty response");
-      return;
+      const todo = await res.json();
+      setTodos((prev) => [todo, ...prev]);
+      setInput("");
+    } catch (err) {
+      console.error("ADD ERROR:", err);
     }
-
-    const todo = JSON.parse(text);
-
-    setTodos((prev) => [todo, ...prev]);
-    setInput("");
-  } catch (err) {
-    console.error("ADD ERROR:", err);
-  }
-};
-    console.log("STATUS:", res.status);
-    console.log("OK:", res.ok);
-
-    const body = await res.text();
-    console.log("BODY:", body);
-
-    if (!res.ok) return;
-
-    const todo = JSON.parse(body);
-
-    setTodos((prev) => [todo, ...prev]);
-    setInput("");
-  } catch (err) {
-    console.error("FULL ERROR:", err);
-  }
-};
+  };
 
   const toggleTodo = async (id, completed) => {
     const res = await fetch(`${API}/${id}`, {
