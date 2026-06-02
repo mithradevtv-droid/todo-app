@@ -11,6 +11,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "https://todo-app-be23.onrender.com",
   "browserslist": { "production": [">0.2%"], "development": ["last 1 chrome version"] }
 }
