@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start-all": "cd backend && npm install && node server.js & cd frontend && npm install && npm start"
+  },
   "dependencies": {
     "better-sqlite3": "^12.10.0"
   }

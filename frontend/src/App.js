@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import "./App.css";
 
-console.log("CURRENT API:", API);
+const API = process.env.REACT_APP_API || "http://localhost:3001/api/todos";
 
-const API = "https://todo-app-be23.onrender.com/api/todos";
+console.log("CURRENT API:", API);
 
 const PRIORITY_CONFIG = {
   high:   { label: "HIGH",   color: "#ff4444", dot: "#ff4444" },
